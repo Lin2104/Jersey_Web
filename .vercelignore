@@ -1,0 +1,5 @@
+# Ignore the server directory entirely
+server/
+
+# Ensure all node_modules are ignored except the one in the client folder
+node_modules
