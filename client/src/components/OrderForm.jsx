@@ -360,7 +360,7 @@ const OrderForm = () => {
                 },
             });
 
-            setMessage(`✅ Order Success! ID: ${response.data._id.substring(18).toUpperCase()}. Please check your email inbox.`);
+            setMessage(`✅ Order Success! ID: ${response.data._id.substring(18).toUpperCase()}. Please check your email Inbox. Don't forget to check Spam box. We'll send you within 1 minute.`);
             
             // Reset form
             setFormData({ customerName: '', customerEmail: '', studentId: '', size: '', paymentMethod: '', quantity: 1 }); 
