@@ -319,10 +319,13 @@ const orderUpload = upload.single('paymentProof');
 const nodemailer = require('nodemailer');
 require('dotenv').config(); 
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // Or 'smtp' and specify host/port for other services
+    host: process.env.MAIL_HOST,   // This will now be smtp.sendgrid.net
+    port: process.env.MAIL_PORT,   // This will be 587 (or 465)
+    secure: false,                 // Use false for port 587
+    requireTLS: true,
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: process.env.EMAIL_USER, // This is always 'apikey' for SendGrid
+        pass: process.env.EMAIL_PASS, // This is your SendGrid API Key
     },
 });
 
