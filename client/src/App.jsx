@@ -274,13 +274,13 @@ const App = () => {
     <Router>
       <AuthProvider>
         <div className="App">
-          <header>
+          {/* <header>
             <nav>
               <a href="/">Order Form (Public)</a> | 
               <a href="/admin/login">Admin Login</a> |
               <a href="/admin/orders">Admin Orders (Protected)</a>
             </nav>
-          </header>
+          </header> */}
           <hr/>
           <Routes>
             {/* 1. PUBLIC DEFAULT ROUTE */}
