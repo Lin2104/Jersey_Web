@@ -8,12 +8,13 @@ const mongoose = require('mongoose');
 const cors = require('cors'); // ⬅️ The package name is 'cors'// ⚠️ Import the new router file
 const orderRoutes = require('./routes/orderRoutes'); 
 const express = require('express'); // ⬅️ MAKE SURE THIS LINE IS PRESENT
-
+const path = require('path');
 const app = express();
 const authRoutes = require('./routes/authRoutes'); // ⬅️ New Import
 const PORT = process.env.PORT || 3000;
 const DB_URI = process.env.MONGO_URI; 
 app.use(express.json()); 
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use(cors()); // This allows requests from ANY origin.
 app.use(express.urlencoded({ extended: true }));
 // app.use('/api/auth', authRoutes);
@@ -21,6 +22,15 @@ app.use('/api/admin', require('./routes/authRoutes'));// server.js (THE CORRECT 
 app.use('/api/orders', require('./routes/orderRoutes'));
 
 app.use('/api/product', require('./routes/productRoutes')); // ⬅️ ADD THIS LINE
+app.get('*', (req, res) => {
+    // Only serve index.html for non-API routes.
+    if (!req.originalUrl.startsWith('/api/')) {
+        res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+    } else {
+        // Handle 404 for any API route that wasn't caught above.
+        res.status(404).send('API endpoint not found.');
+    }
+});
 
 // server.js
 
