@@ -98,20 +98,23 @@ db.on('reconnected', () => {
 // ---------------------------------------------------------------------
 
 // Define the path to your client build folder ('dist').
-const CLIENT_BUILD_PATH = path.join(__dirname, '..', 'dist'); // Assumes 'dist' is at project root
+const CLIENT_BUILD_PATH = path.join(__dirname, '..', 'dist');
 
-// Serve the built frontend static assets (CSS, JS, images).
+// Serve the built frontend static assets
 app.use(express.static(CLIENT_BUILD_PATH));
 
-// Wildcard Route (Fallback) - serves index.html for any client path.
-// Using '/*' avoids the PathError you saw previously.
-app.get('/*', (req, res) => {
-    // Only serve index.html if the URL doesn't look like an API call.
-    if (!req.originalUrl.startsWith('/api/')) {
+// 🚨 FINAL SPA FALLBACK FIX: Use app.use() as a general handler 🚨
+// This handles all methods and paths not caught by Express/API above.
+app.use((req, res) => {
+    // We only serve index.html for GET requests that don't look like an API call.
+    if (req.method === 'GET' && !req.originalUrl.startsWith('/api/')) {
         res.sendFile(path.join(CLIENT_BUILD_PATH, 'index.html'));
-    } else {
-        // If it looks like an API route but was missed, return a final 404.
+    } else if (req.originalUrl.startsWith('/api/')) {
+        // If it was a POST/PUT request that wasn't matched, send a 404.
         res.status(404).send('API endpoint not found.');
+    } else {
+        // For anything else (like non-GET requests to client paths), send 404.
+        res.status(404).send('Not found.');
     }
 });
 
