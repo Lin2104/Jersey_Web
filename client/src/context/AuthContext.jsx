@@ -185,7 +185,7 @@ import axios from 'axios';
 const AuthContext = createContext();
 
 // FIX 1: Base URL now points to the auth segment
-const API_BASE_PATH = '/api/auth/'; 
+const API_BASE_PATH = '/admin'; 
 
 export const AuthProvider = ({ children }) => {
   // Initialize state from Local Storage for persistence
