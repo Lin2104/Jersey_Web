@@ -183,12 +183,12 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios'; 
 
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const AuthContext = createContext();
 
 // FIX 1: Base URL now points to the auth segment
-// const API_BASE_PATH = '/admin'; 
-const ADMIN_API_ENDPOINT = `${API_BASE_URL}/admin`;
+const API_BASE_PATH = '/admin/'; 
+// const ADMIN_API_ENDPOINT = `${API_BASE_URL}/admin`;
 
 export const AuthProvider = ({ children }) => {
   // Initialize state from Local Storage for persistence
@@ -210,7 +210,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // FIX 2: Request now targets /api/auth/login
       const response = await axios.post(
-        ADMIN_API_ENDPOINT + 'login', 
+        API_BASE_PATH + 'login', 
         { username, password }
       );
       
