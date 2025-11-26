@@ -703,6 +703,7 @@ const formattedDateTime = now.toLocaleString('en-US', {
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
+    timeZone: 'Asia/Yangon',
     timeZoneName: 'short' // Includes the timezone (e.g., PST, +0630)
 });
 
