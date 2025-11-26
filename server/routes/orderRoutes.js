@@ -611,21 +611,6 @@ const upload = require('../middleware/upload');
 const SaleOrder = require('../models/SaleOrder');
 const Product = require('../models/Product'); 
 const orderUpload = upload.single('paymentProof');
-<<<<<<< HEAD
-=======
-const nodemailer = require('nodemailer');
-require('dotenv').config(); 
-const transporter = nodemailer.createTransport({
-    host: process.env.MAIL_HOST,   // This will now be smtp.sendgrid.net
-    port: process.env.MAIL_PORT,   // This will be 587 (or 465)
-    secure: true,                 // Use false for port 587
-    requireTLS: true,
-    auth: {
-        user: process.env.EMAIL_USER, // This is always 'apikey' for SendGrid
-        pass: process.env.EMAIL_PASS, // This is your SendGrid API Key
-    },
-});
->>>>>>> b3ac9615dd574ada746c72a88958e9499b279392
 
 // 🚨 CRITICAL FIX: SWAP FROM NODEMAILER (SMTP) TO SENDGRID (HTTP API) 🚨
 // const nodemailer = require('nodemailer'); // REMOVED
