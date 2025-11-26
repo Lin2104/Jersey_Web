@@ -8,18 +8,12 @@ const mongoose = require('mongoose');
 const cors = require('cors'); // ⬅️ The package name is 'cors'// ⚠️ Import the new router file
 const orderRoutes = require('./routes/orderRoutes'); 
 const express = require('express'); // ⬅️ MAKE SURE THIS LINE IS PRESENT
-const path = require('path');
+
 const app = express();
 const authRoutes = require('./routes/authRoutes'); // ⬅️ New Import
 const PORT = process.env.PORT || 3000;
 const DB_URI = process.env.MONGO_URI; 
-const CLIENT_BUILD_PATH = path.join(__dirname, '..', 'dist');
-
-// Step 1: Configure Express to serve your built frontend static assets (CSS, JS, images).
-
 app.use(express.json()); 
-app.use(express.static(CLIENT_BUILD_PATH));
-app.use(express.static(path.join(__dirname, 'dist')));
 app.use(cors()); // This allows requests from ANY origin.
 app.use(express.urlencoded({ extended: true }));
 // app.use('/api/auth', authRoutes);
@@ -27,7 +21,6 @@ app.use('/api/admin', require('./routes/authRoutes'));// server.js (THE CORRECT 
 app.use('/api/orders', require('./routes/orderRoutes'));
 
 app.use('/api/product', require('./routes/productRoutes')); // ⬅️ ADD THIS LINE
-
 
 // server.js
 
@@ -106,15 +99,7 @@ app.get('/health', async (req, res) => {
         });
     }
 });
-app.get('/*', (req, res) => {
-    // We only serve index.html if the URL doesn't look like an API call.
-    if (!req.originalUrl.startsWith('/api/')) {
-        res.sendFile(path.join(CLIENT_BUILD_PATH, 'index.html'));
-    } else {
-        // If it looks like an API route but was missed, return a final 404.
-        res.status(404).send('API endpoint not found.');
-    }
-});
+
 // --- Start the Server ---
 app.listen(PORT, () => {
     console.log(`📡 Server listening on http://localhost:${PORT}`);
