@@ -694,24 +694,41 @@ router.post('/', orderUpload, async (req, res) => {
         };
 
         // --- 3. 📧 SEND ADMIN NOTIFICATION EMAIL 📧 ---
-        const adminMailOptions = {
-            from: VERIFIED_SENDER_ADDRESS, // Use verified address
-            to: process.env.ADMIN_EMAIL, 
-            subject: `🚨 NEW ORDER RECEIVED: #${orderIdShort} - ${savedOrder.customerName}`,
-            html: `
-                <h2>New Order Alert - Action Required</h2>
-                <p>A new order has been submitted and is awaiting payment verification.</p>
-                <p><strong>Order ID:</strong> ${savedOrder._id}</p>
-                <p><strong>Customer:</strong> ${savedOrder.customerName}</p>
-                <p><strong>Email:</strong> ${savedOrder.customerEmail}</p>
-                <p><strong>Student ID:</strong> ${savedOrder.studentId}</p>
-                <p><strong>Item:</strong> ${savedOrder.itemName} (Size: ${savedOrder.size}, Qty: ${savedOrder.quantity})</p>
-                <p><strong>Payment Method:</strong> ${savedOrder.paymentMethod}</p>
-                <p><a href="${savedOrder.paymentProofImageURL}" target="_blank">View Payment Proof Image</a></p>
-                <hr>
-                <p>Please log into the admin panel to review and confirm payment.</p>
-            `,
-        };
+        // At the beginning of your function, capture the current date and format it
+const now = new Date();
+// Format the date/time string (e.g., "November 26, 2025 at 8:30 AM")
+const formattedDateTime = now.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZoneName: 'short' // Includes the timezone (e.g., PST, +0630)
+});
+
+const adminMailOptions = {
+    from: VERIFIED_SENDER_ADDRESS, // Use verified address
+    to: process.env.ADMIN_EMAIL, 
+    subject: `🚨 NEW ORDER RECEIVED: #${orderIdShort} - ${savedOrder.customerName}`,
+    html: `
+        <h2>New Order Alert - Action Required</h2>
+        <p>A new order has been submitted and is awaiting payment verification.</p>
+        
+        <hr>
+        <p>⏱️ **Received At:** ${formattedDateTime}</p> ⬅️ ADDED DATE/TIME HERE
+        <hr>
+        
+        <p><strong>Order ID:</strong> ${savedOrder._id}</p>
+        <p><strong>Customer:</strong> ${savedOrder.customerName}</p>
+        <p><strong>Email:</strong> ${savedOrder.customerEmail}</p>
+        <p><strong>Student ID:</strong> ${savedOrder.studentId}</p>
+        <p><strong>Item:</strong> ${savedOrder.itemName} (Size: ${savedOrder.size}, Qty: ${savedOrder.quantity})</p>
+        <p><strong>Payment Method:</strong> ${savedOrder.paymentMethod}</p>
+        <p><a href="${savedOrder.paymentProofImageURL}" target="_blank">View Payment Proof Image</a></p>
+        <hr>
+        <p>Please log into the admin panel to review and confirm payment.</p>
+    `,
+};
         
         // 🚨 NEW ASYNC/AWAIT SENDING LOGIC 🚨
         try {
