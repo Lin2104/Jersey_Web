@@ -13,7 +13,12 @@ const app = express();
 const authRoutes = require('./routes/authRoutes'); // ⬅️ New Import
 const PORT = process.env.PORT || 3000;
 const DB_URI = process.env.MONGO_URI; 
+const CLIENT_BUILD_PATH = path.join(__dirname, '..', 'dist');
+
+// Step 1: Configure Express to serve your built frontend static assets (CSS, JS, images).
+
 app.use(express.json()); 
+app.use(express.static(CLIENT_BUILD_PATH));
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(cors()); // This allows requests from ANY origin.
 app.use(express.urlencoded({ extended: true }));
@@ -22,15 +27,7 @@ app.use('/api/admin', require('./routes/authRoutes'));// server.js (THE CORRECT 
 app.use('/api/orders', require('./routes/orderRoutes'));
 
 app.use('/api/product', require('./routes/productRoutes')); // ⬅️ ADD THIS LINE
-app.get('*', (req, res) => {
-    // Only serve index.html for non-API routes.
-    if (!req.originalUrl.startsWith('/api/')) {
-        res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
-    } else {
-        // Handle 404 for any API route that wasn't caught above.
-        res.status(404).send('API endpoint not found.');
-    }
-});
+
 
 // server.js
 
@@ -109,7 +106,15 @@ app.get('/health', async (req, res) => {
         });
     }
 });
-
+app.get('/*', (req, res) => {
+    // We only serve index.html if the URL doesn't look like an API call.
+    if (!req.originalUrl.startsWith('/api/')) {
+        res.sendFile(path.join(CLIENT_BUILD_PATH, 'index.html'));
+    } else {
+        // If it looks like an API route but was missed, return a final 404.
+        res.status(404).send('API endpoint not found.');
+    }
+});
 // --- Start the Server ---
 app.listen(PORT, () => {
     console.log(`📡 Server listening on http://localhost:${PORT}`);
