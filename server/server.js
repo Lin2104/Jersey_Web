@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cors()); // This allows requests from ANY origin.
 app.use(express.urlencoded({ extended: true }));
 // app.use('/api/auth', authRoutes);
-app.use('/api/auth', require('./routes/authRoutes'));// server.js (THE CORRECT LINE)
+app.use('/api/admin', require('./routes/authRoutes'));// server.js (THE CORRECT LINE)
 app.use('/api/orders', require('./routes/orderRoutes'));
 
 app.use('/api/product', require('./routes/productRoutes')); // ⬅️ ADD THIS LINE
