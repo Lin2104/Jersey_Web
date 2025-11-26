@@ -185,7 +185,8 @@ import axios from 'axios';
 const AuthContext = createContext();
 
 // FIX 1: Base URL now points to the auth segment
-const API_BASE_PATH = '/admin'; 
+// const API_BASE_PATH = '/admin'; 
+const ADMIN_API_ENDPOINT = `${API_BASE_URL}/admin`;
 
 export const AuthProvider = ({ children }) => {
   // Initialize state from Local Storage for persistence
@@ -207,7 +208,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // FIX 2: Request now targets /api/auth/login
       const response = await axios.post(
-        API_BASE_PATH + 'login', 
+        ADMIN_API_ENDPOINT + 'login', 
         { username, password }
       );
       
