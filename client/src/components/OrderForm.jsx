@@ -490,12 +490,12 @@ const OrderForm = () => {
 <div className="mb-4">
     <label htmlFor="rollNo" className="block text-sm font-medium text-gray-700 mb-1">Roll No (Numerical)</label>
     <input
-        type="number" // Use type="number" for numerical input
+        type="text" // Use type="number" for numerical input
         id="rollNo"
         name="rollNo"
         value={formData.rollNo}
         onChange={handleChange}
-        placeholder="Enter your Roll Number"
+        placeholder="Enter your Major & Roll Number"
         required
         min="1" // Ensure the number is at least 1
         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"
