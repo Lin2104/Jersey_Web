@@ -525,7 +525,7 @@ const OrderForm = () => {
                         ))}
                     </select>
                     <p className="text-sm font-semibold text-orange-500 p-2 rounded-lg ">
-                        **Please Fill Buyer at Note** 
+                        **Please Fill Your Name at Note** 
                     </p>
                     
                     {/* 🚨 DYNAMIC QR CODE & PAYMENT PROOF (Side-by-Side on Desktop) 🚨 */}
