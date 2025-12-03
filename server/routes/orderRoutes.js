@@ -121,7 +121,8 @@ const adminMailOptions = {
         <p><strong>Payment Method:</strong> ${savedOrder.paymentMethod}</p>
         <p><a href="${savedOrder.paymentProofImageURL}" target="_blank">View Payment Proof Image</a></p>
         <hr>
-        <p>Please log into the admin panel to review and confirm payment.</p>
+        <p>Please log into the admin panel to review and confirm payment.
+        https://jersey-web-lime.vercel.app/admin/orders</p>
     `,
 };
         
